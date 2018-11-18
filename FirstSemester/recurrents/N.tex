@@ -1,0 +1,67 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{listings}
+
+\usepackage{geometry}
+\geometry{a4paper}
+\lstset{tabsize=2}
+
+\title{Рекуренты-4}
+\author{Санду Р.А.}
+
+\begin{document}
+\maketitle
+
+\[
+	T\left(n\right)=\sqrt{n}T\left(\left\lceil\sqrt{n}\right\rceil\right)+n
+\]
+
+Для простоты будем оценвивать функцию
+
+\[
+	T\left(n\right)=\sqrt{n}T\left(\sqrt{n}\right)+n
+\]
+
+Раскрутим рекуренту 3 раза:
+
+\[
+	T\left(n\right) = \sqrt{n}\sqrt[4]{n}T\left(\sqrt[4]{n}\right)+2n
+\]
+
+\[
+	T\left(n\right) = \sqrt{n}\sqrt[4]{n}\sqrt[8]{n}T\left(\sqrt[8]{n}\right)+3n
+\]
+
+\[
+	T\left(n\right) = \sqrt{n}\sqrt[4]{n}\sqrt[8]{n}\sqrt[16]{n}T\left(\sqrt[16]{n}\right)+4n
+\]
+
+Очевидна закономерность: на каждой итерации коэффициент перед нерекурсивным членом увеличивается на 1. Возникает вопрос: сколько итераций совершит алгоритм? Ответом будет наименьшее решение следующего неравенства относительно x:
+
+\[
+	n^{2^{-x}} \leq 2
+\]
+
+(берём 2, т.к. итерированный корень из действительного числа больше 1 никогда не достигает 1, а время работы $T(2)$ можно считать константой)
+
+\[
+	\frac{\log_2{n}}{2^x} \leq \log_2{2}
+\]
+
+\[
+	\log_2{n} \leq 2^x
+\]
+
+\[
+	x \geq \log_2{\log_2{n}}
+\]
+
+Итого ассимптотика будет
+
+\[
+	T\left(n\right) = \Theta\left(nx\right) = \Theta\left(n\log_2{\log_2{n}}\right)
+\]
+
+\end{document}

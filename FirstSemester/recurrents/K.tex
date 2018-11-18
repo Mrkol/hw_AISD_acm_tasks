@@ -1,0 +1,140 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{listings}
+
+\usepackage{geometry}
+\geometry{a4paper}
+\lstset{tabsize=2}
+
+\title{Рекуренты-1}
+\author{Санду Р.А.}
+
+\begin{document}
+\maketitle
+
+\[
+	T\left(n\right)=T\left(\frac{n}{2k+1}\right)+T\left(n\frac{3k+1}{4k+2}\right) + f\left(n\right),\;\;f\left(n\right) 
+		= \Theta\left(n\right)
+\]
+
+Докажем индукцией по $n$, что $T\left(n\right) = \mathcal{O}\left(n\right)$, т.е.
+
+\[
+	\exists C.\;\exists n_0.\;\forall n>n_0.\;T(n)\leq Cn
+\]
+
+Возьмём
+
+\[
+	C := \max_{i=1..42}\frac{T(i)}{i}
+\]
+
+\[
+	n_0 := 1
+\]
+
+Тогда базой индукции будет $n = 1..42$, ведь
+
+\[
+	T(n) \leq Cn
+\]
+
+\[
+	\frac{T(n)}{n} \leq C
+\]
+
+По определению C. Переход. Пусть
+
+\[
+	\forall n_0<n< n'.\;T(n)\leq Cn
+\]
+
+Тогда
+
+\[
+	T\left( \frac{n'}{2k+1} \right) \leq C\frac{n'}{2k+1}
+\]
+
+
+\[
+	T\left( n'\frac{3k+1}{4k+2} \right) \leq Cn'\frac{3k+1}{4k+2}
+\]
+
+Сложим, и прибавим $f(n) \leq An$
+
+\[
+	T(n') = T\left( \frac{n'}{2k+1} \right) + T\left( n'\frac{3k+1}{4k+2} \right) + f(n') \leq n'\left( C\frac{3k+3}{4k+2}+A\right)
+\]
+
+
+\[
+	T(n') \leq n'\left( C\frac{3k+3}{4k+2}+A\right) \leq n'C
+\]
+
+И по индукции утверждение доказанно. Но последний переход можно сделать тогда и только тогда, когда
+
+\[
+	C\frac{3k+3}{4k+2}+A \leq C
+\]
+
+Решив неравенство относительно $k$ получаем, что указанное  рассуждение справедливо для
+
+\[
+	k > 1 + \frac{6A}{C-4A} \geq 1
+\]
+
+(последний переход верен, так как выбранная $C > 4A$)
+
+Таким образом, алгоритм имеет асимптотику $\mathcal{O}(n)$ при
+
+\[
+	k > 1
+\]
+
+Покажем, что при $k=1$ оценка не верна. Докажем по индукции, что
+
+\[
+	\forall C.\;\forall n_0.\;\exists n>n_0.\;T(n) \geq Cn
+\]
+
+За базу индукции возьмём
+
+\[
+	C := 1
+\]
+
+Очевидно, что нерекурсивный член $T(n)$ уже гарантирует нам верность утверждения для любых $n$.
+
+Предположим, что утверждение верно для всех $C<C'$. Тогда
+
+\[
+	T\left(\frac{n}{3}\right) \geq (C'-1)\frac{n}{3}
+\]
+
+\[
+	T\left(\frac{2n}{3}\right) \geq (C'-1)\frac{2n}{3}
+\]
+
+Сложим эти два неравенства:
+
+\[
+	T\left(\frac{n}{3}\right) + T\left(\frac{2n}{3}\right) \geq (C'-1)n
+\]
+
+Прибавим к обоим частям $f(n) \geq An$
+
+\[
+	T\left(\frac{n}{3}\right) + T\left(\frac{2n}{3}\right) + f(n) \geq C'n + (A-1)n
+\]
+
+А так как f обязана как минимум сделать $\frac{2}{3}n$ сравнений для проверки отсортированности столбцов, а также отсортировать $\frac{1}{3}n$ элементов по пивоту, коэффициент A > 1, и следовательно 
+
+\[
+	T\left(n\right) \geq C'n
+\]
+
+По принципу индукции, утверждение доказанно.
+
+\end{document}

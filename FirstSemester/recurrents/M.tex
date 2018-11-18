@@ -1,0 +1,139 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{listings}
+
+\usepackage{geometry}
+\usepackage{amsmath}
+\geometry{a4paper}
+\lstset{tabsize=2}
+
+\title{Рекуренты-3}
+\author{Санду Р.А.}
+
+\begin{document}
+\maketitle
+
+\begin{equation}
+	T\left(n\right)=2T\left(\left\lfloor\frac{n}{2}\right\rfloor\right)+n\log_2{n}
+\end{equation}
+
+Легко заметить, что ответ — $\Theta\left(n\log^2_2{n}\right)$
+
+Докажем это по индукции. Верхняя оценка:
+
+\begin{equation}
+	T\left(n\right) \leq Cn\log^2_2{n}
+\end{equation}
+
+Переход:
+
+\begin{equation}
+	T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) 
+	\leq 
+	C\left\lfloor\frac{n}{2}\right\rfloor \log^2_2{\left\lfloor\frac{n}{2}\right\rfloor}
+\end{equation}
+Целую часть оценим сверху самим числом:
+\begin{equation}
+	2T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) 
+	\leq 
+	C n\left(\log_2{n}-1\right)^2
+\end{equation}
+
+\begin{equation}
+	2T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) 
+	\leq 
+	Cn\log^2_2{n} - 2Cn\log_2{n} + nC
+\end{equation}
+Так как для достаточно больших $n$ имеем $n - n\log_2{n} < 0$, ослабим оценку:
+\begin{equation}
+	2T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) 
+	\leq 
+	Cn\log^2_2{n} - Cn\log_2{n}
+\end{equation}
+\begin{equation}
+	2T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) + Cn\log_2{n}
+	\leq 
+	Cn\log^2_2{n}
+\end{equation}
+Но тогда для достаточно больших $C$ получаем
+\begin{equation}
+	T\left(n\right)
+	=
+	2T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) + n\log_2{n}
+	\leq
+	2T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) + Cn\log_2{n} 
+	\leq 
+	Cn\log^2_2{n}
+\end{equation}
+
+\begin{equation}
+	T\left(n\right)
+	\leq 
+	Cn\log^2_2{n}
+\end{equation}
+
+Что и требовалось доказать. За базу возьмём $n=2$ и $n=3$, для них очевидно выполняется, константа подбирается. Тогда переход индукции доказывает утверждение для всех б\'{о}льших $n$.
+
+\pagebreak
+
+Нижняя оценка:
+
+\begin{equation}
+	T\left(n\right) \geq  cn\log^2_2{n}
+\end{equation}
+Переход:
+\begin{equation}
+	T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) \geq  c\left\lfloor\frac{n}{2}\right\rfloor\log^2_2{\left\lfloor\frac{n}{2}\right\rfloor}
+\end{equation}
+Оценим целую часть снизу:
+\begin{equation}
+	T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) \geq  c \frac{n - 1}{2} \log^2_2{\frac{n}{4}}
+\end{equation}
+Преобразуем:
+\begin{equation}
+	2T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) \geq  c \left(n - 1\right) \left(\log_2{n}-2\right)^2
+\end{equation}
+
+\begin{equation}
+	2T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) \geq  c \left(n - 1\right) \left(\log^2_2{n}-4\log_2{n}+4\right)
+\end{equation}
+
+\begin{equation}
+	2T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) \geq  cn\log^2_2{n}-4cn\log_2{n}+\left(4cn - c\log^2_2{n}+4c\log_2{n}-4c\right)
+\end{equation}
+Для достаточно больших $n$ можно ослабить:
+\begin{equation}
+	2T\left(\left\lfloor\frac{n}{2}\right\rfloor\right)
+	\geq
+	cn\log^2_2{n} - 4cn\log_2{n}
+\end{equation}
+
+\begin{equation}
+	2T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) + n\log_2{n}
+	\geq
+	cn\log^2_2{n} + n\log_2{n} - 4cn\log_2{n}
+\end{equation}
+
+Для достаточно малых $c$:
+
+\begin{equation}
+	2T\left(\left\lfloor\frac{n}{2}\right\rfloor\right) + n\log_2{n}
+	\geq
+	cn\log^2_2{n}
+\end{equation}
+
+\begin{equation}
+	T\left(n\right)
+	\geq
+	cn\log^2_2{n}
+\end{equation}
+
+Что и требовалось. База берётся аналогично.
+
+Таким образом, действительно, $T(n) = \Theta(n\log^2_2{n})$.
+
+
+
+\end{document}

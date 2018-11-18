@@ -1,0 +1,61 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{listings}
+
+\usepackage{geometry}
+\geometry{a4paper}
+\lstset{tabsize=2}
+
+\title{Рекуренты-2}
+\author{Санду Р.А.}
+
+\begin{document}
+\maketitle
+
+\[
+	T\left(n\right)=3T\left(\sqrt{n}\right)+\log_2{n}
+\]
+
+\[
+	m := \log_2{n}
+\]
+
+\[
+	T\left(2^m\right) = 3T\left(2^\frac{m}{2}\right) + m
+\]
+
+\[
+	S\left(m\right) := T\left(2^m\right)
+\]
+
+\[
+	S\left(m\right) = 3S\left(\frac{m}{2}\right) + m
+\]
+
+Используем мастер-теорему
+
+\[
+	m = \mathcal{O}\left(m^{\log_2{3}-\varepsilon}\right)
+\]
+
+Где
+
+\[
+	\varepsilon := \log_2{3}-1 > 0
+\]
+
+Тогда по мастер-теореме
+
+\[
+	T\left(2^m\right) = S\left(m\right) = \Theta\left(m^{\log_2{3}}\right)
+\]
+
+\[
+	T\left(n\right) = \Theta\left(\log_{2}^{\log_2{3}}{m}\right)
+\]
+
+
+
+\end{document}

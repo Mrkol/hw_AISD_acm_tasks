@@ -1,0 +1,52 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{listings}
+
+\usepackage{geometry}
+\geometry{a4paper}
+\lstset{tabsize=2}
+
+\title{Сравнение скорости работы std::cin и scanf.}
+\author{Санду Р.А.}
+\date{}
+
+\begin{document}
+\maketitle
+
+В качестве данных для тестирования была выбрана последовательность, i-ый член которой является i-ым числом Фибоначчи по модулю $10^9+7$, делённым на $10^6$.
+Для генерации был использован следующий код (\verb!generate.cpp!):
+\lstinputlisting[language=c++]{generate.cpp}
+\clearpage
+
+Для проведения тестов была использованна следующая программа (\verb!clock.cpp!):
+\lstinputlisting[language=c++]{clock.cpp}
+
+
+А также для удобства был написан следующий скрипт, делающий всё и сразу \verb!test.sh!:
+\lstinputlisting[language=bash]{test.sh}
+
+С помощью программы-генератора были сгенерированны 4 файла с соответственно $10^4$, $10^5$, $10^6$ и $10^7$ числами, каждый из которых был по-отдельности считан программой-тестом, в результате чего были получены следующие данные:
+
+\begin{center}
+\begin{tabular}{ | c | c | c | }
+	\hline
+	Кол-во чисел & std::cin & scanf \\
+	\hline
+	$10^4$ & 46.875 & 31.25 \\
+	$10^5$ & 437.5 & 125.0 \\
+	$10^6$ & 3968.75 & 1421.88 \\
+	$10^7$ & 41812.5 & 14703.1 \\
+	\hline
+	\hline
+	\multicolumn{3}{|c|}{Время приведено в миллисекундах.} \\
+	\hline
+\end{tabular}
+\end{center}
+
+Из этих данных можно сделать очевидный вывод: std::cin работает намного медленнее, нежели scanf.
+Но на самом деле, если использовать std:ifstream и fscanf, внезапно окажется, что потоки С++ работают быстрее (этот факт тоже был проверен).
+Вывод номер два: не использовать freopen для считывания файлов.
+
+\end{document}
